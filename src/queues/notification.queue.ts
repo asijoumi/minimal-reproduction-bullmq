@@ -8,11 +8,9 @@ export class NotificationQueue extends WorkerHost {
 
   async process(job: Job<any, any, string>): Promise<any> {
     try {
-      this.logger.log(`Processing job ${job.id}`);
-
       switch (job.name) {
         case 'notifyUser':
-          this.logger.log('Notifying user');
+          this.logger.log(`Notifying user for ${job.data.id}`);
           break;
         default:
           this.logger.error('Unknown job name');

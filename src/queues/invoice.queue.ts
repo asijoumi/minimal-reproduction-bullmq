@@ -8,11 +8,9 @@ export class InvoiceQueue extends WorkerHost {
 
   async process(job: Job<any, any, string>): Promise<any> {
     try {
-      this.logger.log(`Processing job ${job.id}`);
-
       switch (job.name) {
         case 'createInvoice':
-          this.logger.log(`Creating invoice for ${job.id}`);
+          this.logger.log(`Creating invoice for ${job.data.id}`);
           break;
         default:
           this.logger.error('Unknown job name');

@@ -2,17 +2,15 @@ import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Logger } from '@nestjs/common';
 import { Job } from 'bullmq';
 
-@Processor('invoiceQueue')
+@Processor('alertingQueue')
 export class AlertingQueue extends WorkerHost {
   private logger = new Logger(AlertingQueue.name);
 
   async process(job: Job<any, any, string>): Promise<any> {
     try {
-      this.logger.log(`Processing job ${job.id}`);
-
       switch (job.name) {
         case 'notifyTeam':
-          this.logger.log('Notifying team');
+          this.logger.log(`Notifying team for ${job.data.id}`);
           break;
         default:
           this.logger.error('Unknown job name');

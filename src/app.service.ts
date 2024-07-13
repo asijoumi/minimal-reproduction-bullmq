@@ -12,17 +12,22 @@ export class AppService {
   ) {}
 
   async process() {
+    const id = Math.floor(Math.random() * 10000);
+
     await this.flow.add({
       name: 'createInvoice',
       queueName: 'invoiceQueue',
+      data: { id },
       children: [
         {
           name: 'notifyUser',
           queueName: 'notificationQueue',
+          data: { id },
         },
         {
           name: 'notifyTeam',
           queueName: 'alertingQueue',
+          data: { id },
         },
       ],
     });
